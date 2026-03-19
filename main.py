@@ -3,6 +3,8 @@ import threading
 import time
 import os
 
+# file:inputs/test_spellcheck_italiano.txt
+
 from domain.dictionary import Dictionary
 from domain.spellcheck import Spellcheck
 
@@ -44,15 +46,18 @@ def main():
     if language in available_languages:
         print(f"Verrà utilizzato il dizionario di {language}")
         print()
-        txt = input("Inserire il testo da correggere: ")
+        txt = input("Inserire il testo da correggere (oppure file: per caricare un file): ")
 
         if txt.startswith("file:"):
             f_path = txt.replace("file:", "")
+            print(f"Avvio correzione file {f_path}")
             f = open(f_path, "r", encoding="utf-8")
             txt = f.readlines()[0]
 
-        results = Spellcheck(txt, dictionaries[language]).spellcheck()
+        results = Spellcheck(txt, dictionaries[language]).spellcheck_linear()
         print(results)
+    else:
+        print(f"Unable to find dictionary for {language}, quitting")
 
 if __name__ == "__main__":
     main()

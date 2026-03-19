@@ -1,7 +1,7 @@
 import unittest
 
 from domain.dictionary import Dictionary
-from domain.spellcheck import Spellcheck
+from domain.spellcheck import Spellcheck, SpellcheckResult
 
 
 class MyTestCase(unittest.TestCase):
@@ -24,15 +24,14 @@ class MyTestCase(unittest.TestCase):
         self.assertNotIn("?", sanitized)
 
     def test_spellcheck(self):
-        text = "ciao io son, pippo pecora!"
+        text = "ciao io son, pippo pecora 23!"
 
         correction = Spellcheck(text, MyTestCase.__TEST_DICTIONARY__)
-        results = correction.spellcheck()
+        results: SpellcheckResult = correction.spellcheck_linear()
 
-        self.assertIs(len(results), 5)
-        self.assertFalse(results[1].correct)
-        self.assertFalse(results[2].correct)
-        self.assertTrue(results[3].correct)
+        self.assertIs(len(results.wrong_words) + len(results.correct_words), 6)
+        self.assertIs(results.total_mistakes, 2)
+        self.assertNotEqual(results.time_elapsed, 0)
 
 
 if __name__ == '__main__':

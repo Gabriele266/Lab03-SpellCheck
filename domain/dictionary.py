@@ -1,4 +1,4 @@
-
+from dataclasses import dataclass
 
 class Dictionary:
     __DICT_BASE_PATH__ = "resources"
@@ -25,7 +25,10 @@ class Dictionary:
         f.close()
 
     def is_correct(self, word: str) -> bool:
-        return word in self._terms
+        if word.isnumeric():
+            return True
+
+        return word.lower() in self._terms
 
     @classmethod
     def from_words(cls, words: list[str]):
@@ -34,16 +37,13 @@ class Dictionary:
     def __str__(self):
         return f"{self._language} dictionary with {len(self._terms)} terms"
 
+@dataclass(frozen=True)
 class RichWord:
-    """Represents the correction output of a word"""
-    def __init__(self, word: str, correct: bool):
-        self._word: str = word
-        self._correct: bool = correct
+    word: str
+    correct: bool
 
-    @property
-    def word(self) -> str:
-        return self._word
-
-    @property
-    def correct(self) -> bool:
-        return self._correct
+    def __str__(self):
+        if self.correct:
+            return f"""{self.word} -> correct"""
+        else:
+            return f"""{self.word} -> not correct"""

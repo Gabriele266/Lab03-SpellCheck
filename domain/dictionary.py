@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import math
 
 class Dictionary:
     __DICT_BASE_PATH__ = "resources"
@@ -7,6 +8,7 @@ class Dictionary:
         if terms is None:
             terms = []
 
+        terms.sort()
         self._terms: list[str] = terms                 # using a list because the order matters
         self.filename: str = filename
         self._language: str = language
@@ -29,6 +31,39 @@ class Dictionary:
             return True
 
         return word.lower() in self._terms
+
+    def is_correct_dicotomic(self, word: str) -> bool:
+        if word.isnumeric():
+            return True
+
+        n = len(self._terms)
+        a = 0       # left pointer to search zone
+        b = n - 1   # right pointer to search zone
+        p = math.floor(math.fabs(b - a) / 2) + a        # pointer to current element to inspect
+        p_new = p
+
+        while a >= 0 and n > b >= p and p >= a:
+            if self._terms[p] == word:
+                return True
+
+            if self._terms[p] > word:                       # go left
+                b = p - 1
+                p_new = math.floor(math.fabs(b - a) / 2) + a
+                if p_new == p:
+                    return False
+
+                p = p_new
+
+            if self._terms[p] < word:
+                a = p + 1
+                p_new = math.floor(math.fabs(b - a) / 2) + a
+                if p_new == p:
+                    return False
+
+                p = p_new
+
+        return False
+
 
     @classmethod
     def from_words(cls, words: list[str]):

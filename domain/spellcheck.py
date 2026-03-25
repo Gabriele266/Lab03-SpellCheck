@@ -58,3 +58,27 @@ class Spellcheck:
 
         t2 = time.time()
         return SpellcheckResult(wrong_words=wrong_words, correct_words=correct_words, total_mistakes=wrong, time_elapsed=t2 - t1)
+
+    def spellcheck_dicotomic(self) -> SpellcheckResult:
+        """Perform spellcheck using dicotmic search alghorithm"""
+        t1 = time.time()
+        # 1 pulizia del testo in input da segni di punteggiatura, a capo
+        sanitized = self.sanitize_input()
+
+        # scorrimento delle parole una ad una e controllo della correttezza
+        words_list = sanitized.split(" ")
+
+        wrong_words = []
+        correct_words = []
+        wrong = 0
+        for word in words_list:
+            r = RichWord(word, self._dictionary.is_correct_dicotomic(word))
+            if r.correct:
+                correct_words.append(r)
+            else:
+                wrong_words.append(r)
+                wrong += 1
+
+        t2 = time.time()
+        return SpellcheckResult(wrong_words=wrong_words, correct_words=correct_words, total_mistakes=wrong,
+                                time_elapsed=t2 - t1)

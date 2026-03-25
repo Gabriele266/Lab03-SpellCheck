@@ -28,6 +28,7 @@ class Spellcheck:
 
     def sanitize_input(self) -> str:
         text_cp = str(self._input_text)         # working copy
+        text_cp = text_cp.lower()
         """Sanitize the input text"""
         chars = "\\\n\t`*_{}[]()>#+-.!$%^;,=_~?!'"
 

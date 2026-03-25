@@ -54,7 +54,7 @@ def main():
             f = open(f_path, "r", encoding="utf-8")
             txt = f.readlines()[0]
 
-        results = Spellcheck(txt, dictionaries[language]).spellcheck_linear()
+        results = Spellcheck(txt, dictionaries[language]).spellcheck_dicotomic()
         print(results)
     else:
         print(f"Unable to find dictionary for {language}, quitting")

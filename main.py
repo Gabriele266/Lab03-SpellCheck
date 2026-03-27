@@ -7,6 +7,7 @@ import flet as ft
 
 from domain.dictionary import Dictionary
 from domain.spellcheck import Spellcheck
+from ui.spellcheckcontroller import SpellcheckController
 from ui.view import HomePage
 
 

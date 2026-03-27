@@ -2,11 +2,15 @@ import domain.dictionary as dc
 import threading
 import time
 import os
-
+import flet as ft
 # file:inputs/test_spellcheck_italiano.txt
 
 from domain.dictionary import Dictionary
 from domain.spellcheck import Spellcheck
+from ui.view import HomePage
+
+
+# NEL CASO IN CUI DIA ERRORE ALLA PRIMA INSTALLAZIONE SUL PROGETTO, LANCIARE IL COMANDO "INSTALL CERTIFICATES.COMMAND" DALLA CARTELLA APPLICATIONS/PYTHON 3.10
 
 def scan_available_languages() -> set[str]:
     files = os.listdir(Dictionary.__DICT_BASE_PATH__)
@@ -59,6 +63,10 @@ def main():
     else:
         print(f"Unable to find dictionary for {language}, quitting")
 
+def main_flet(page: ft.Page):
+    page.views.append(HomePage())
+    page.update()
+
 if __name__ == "__main__":
-    main()
+    ft.run(main_flet)
 

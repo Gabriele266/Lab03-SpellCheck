@@ -1,4 +1,5 @@
 import time
+from enum import Enum
 
 from domain.dictionary import RichWord, Dictionary
 from dataclasses import dataclass
@@ -83,3 +84,11 @@ class Spellcheck:
         t2 = time.time()
         return SpellcheckResult(wrong_words=wrong_words, correct_words=correct_words, total_mistakes=wrong,
                                 time_elapsed=t2 - t1)
+
+class AvailableAlgorithms(Enum):
+    LINEAR = "linear",
+    DICOTOMIC = "dicotomic"
+
+    @classmethod
+    def list(cls) -> list[str]:
+        return list(map(lambda t: t.value, cls))

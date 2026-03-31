@@ -1,14 +1,16 @@
 import flet as ft
 from flet import View
 
+from ui.generics import WithBanner
 from ui.spellcheckcontroller import SpellcheckController
 from domain.spellcheck import AvailableAlgorithms
 
 @ft.control
-class HomePage(View):
-    def __init__(self):
+class HomePage(View, WithBanner):
+    def __init__(self, page: ft.Page) -> None:
         self.controller = SpellcheckController(self)
         super().__init__()
+        WithBanner.__init__(self, page)
 
     def init(self):
         langs = self.controller.model.available_languages

@@ -40,6 +40,7 @@ def main():
         print(f"Unable to find dictionary for {language}, quitting")
 """
 def main_flet(page: ft.Page):
+    page.height = 1200
     page.views.append(HomePage(page))
     page.update()
 

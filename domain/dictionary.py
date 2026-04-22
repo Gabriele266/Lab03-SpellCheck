@@ -17,7 +17,7 @@ class Dictionary:
         if self.filename is None:
             raise ValueError("No filename provided")
 
-        f = open(f"{Dictionary.__DICT_BASE_PATH__}\\{self.filename}", "r", encoding="utf-8")
+        f = open(f"{Dictionary.__DICT_BASE_PATH__}/{self.filename}", "r", encoding="utf-8")
 
         line = f.readline()
         while line:

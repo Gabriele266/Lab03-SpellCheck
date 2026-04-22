@@ -91,4 +91,9 @@ class AvailableAlgorithms(Enum):
 
     @classmethod
     def list(cls) -> list[str]:
-        return list(map(lambda t: t.value, cls))
+        m = map(lambda t: t.value, cls)
+        l = list(m)
+
+        for i in range(0, len(l)):
+            l[i] = str(l[i]).replace("(", "").replace(")", "").replace("'", "").replace(",", "")
+        return l
